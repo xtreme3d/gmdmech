@@ -20,6 +20,7 @@ import dmech.shape;
 import dmech.constraint;
 import dmech.raycast;
 import character;
+import model;
 
 __gshared int numPhysicsWorlds = 0;
 
@@ -41,6 +42,8 @@ export double dmInit()
     GC.disable();
     return 1.0;
 }
+
+// World
 
 export double dmCreateWorld(double maxCollisions)
 {
@@ -113,6 +116,34 @@ export double dmWorldAddCollisionShape(double w, double b, double g, double px, 
         return 0.0;
 }
 
+export double dmWorldSetModel(double w, double m)
+{
+    PhysicsWorld world = w.toObject!(PhysicsWorld);
+    if (m != 0.0)
+    {
+        Model model = m.toObject!(Model);
+        if (world && model)
+        {
+            if (model.bvh)
+            {
+                world.bvhRoot = model.bvh.root;
+                return 1.0;
+            }
+            else
+                return 0.0;
+        }
+        else
+            return 0.0;
+    }
+    else
+    {
+        world.bvhRoot = null;
+        return 1.0;
+    }
+}
+
+// Geometry
+
 export double dmCreateGeomSphere(double r)
 {
     GeomSphere geom = New!(GeomSphere)(r);
@@ -153,6 +184,8 @@ export double dmDeleteGeom(double g)
     return 1.0;
 }
 
+// Body
+
 export double dmBodyGetPosition(double b, double index)
 {
     RigidBody rb = b.toObject!(RigidBody);      
@@ -189,6 +222,8 @@ export double dmBodyGetUp(double b, double index)
     else
         return 0.0;
 }
+
+// Character
 
 export double dmCharacterCreate(double w, double g, double px, double py, double pz, double mass)
 {
@@ -305,4 +340,82 @@ export double dmCharacterGetGroundBody(double c)
     }
     else
         return 0.0;
+}
+
+// Model
+
+export double dmModelCreate()
+{
+    Model m = New!(Model)();
+    return m.gmptr;
+}
+
+export double dmDeleteModel(double model)
+{
+    Model m = model.toObject!(Model);
+    if (m)
+    {
+        Delete(m);
+    }
+    return 1.0;
+}
+
+export double dmModelAddMesh(double model)
+{
+    Model m = model.toObject!(Model);
+    if (m)
+    {
+        return m.addMesh();
+    }
+    return 1.0;
+}
+
+export double dmModelMeshAddVertex(double model, double mindex, double x, double y, double z)
+{
+    Model m = model.toObject!(Model);
+    if (m)
+    {
+        return m.meshes[cast(uint)mindex].addVertex(Vector3f(x, y, z));
+    }
+    return 1.0;
+}
+
+export double dmModelMeshAddNormal(double model, double mindex, double x, double y, double z)
+{
+    Model m = model.toObject!(Model);
+    if (m)
+    {
+        return m.meshes[cast(uint)mindex].addNormal(Vector3f(x, y, z));
+    }
+    return 1.0;
+}
+
+export double dmModelMeshAddFaceGroup(double model, double mindex)
+{
+    Model m = model.toObject!(Model);
+    if (m)
+    {
+        return m.meshes[cast(uint)mindex].addFacegroup();
+    }
+    return 1.0;
+}
+
+export double dmModelMeshFaceGroupAddTriangle(double model, double mindex, double fg, double v1, double v2, double v3)
+{
+    Model m = model.toObject!(Model);
+    if (m)
+    {
+        return m.meshes[cast(uint)mindex].facegroups[cast(uint)fg].addFace(cast(uint)v1, cast(uint)v2, cast(uint)v3);
+    }
+    return 1.0;
+}
+
+export double dmModelBuildBVH(double model)
+{
+    Model m = model.toObject!(Model);
+    if (m)
+    {
+        m.buildBVH();
+    }
+    return 1.0;
 }
