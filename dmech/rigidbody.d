@@ -222,7 +222,7 @@ class RigidBody: Freeable
         }
 
         if (enableRotation)
-        if (angularVelocity.length > 0.2f /* || numContacts < 3 */) //stopThreshold
+        if (angularVelocity.length > 0.5f /* || numContacts < 3 */) //0.2f
         {
             orientation += 0.5f * Quaternionf(angularVelocity, 0.0f) * orientation * dt;
             orientation.normalize();

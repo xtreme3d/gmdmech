@@ -88,10 +88,10 @@ void solveContact(Contact* c, double dt)
         return;
 
     float bounce = (body1.bounce + body2.bounce) * 0.5f;
-    float damping = 0.9f;
+    float damping = 0.5f;
     float C = max(0, -bounce * c.initialVelocityProjection - damping);
 
-    float bias = 0.0f;
+    float bias = 0.1f;
 
     // Velocity-based position correction
   /*
@@ -104,8 +104,8 @@ void solveContact(Contact* c, double dt)
 
     float normalImpulse = (C - a + bias) / b;
 
-    //if (normalImpulse < 0.0f)
-    //    normalImpulse = 0.0f;
+    if (normalImpulse < 0.0f)
+        normalImpulse = 0.0f;
 
     // Friction
     float mu = (body1.friction + body2.friction) * 0.5f;
@@ -165,10 +165,10 @@ void solvePositionError(Contact* c, uint numContacts)
     if (c.penetration <= 0.0f)
         return;
     
-    float ERP = (1.0f / numContacts) * 0.94f;
-    float pc = c.penetration * ERP;
-    //c.penetration -= pc;
-    c.penetration = 0.0f;
+    //float ERP = (1.0f / numContacts) * 0.94f; //0.94f;
+    float pc = c.penetration * 0.90; //ERP;
+    c.penetration -= pc;
+    //c.penetration = 0.0f;
     
     if (pvp >= pc)
         return;
