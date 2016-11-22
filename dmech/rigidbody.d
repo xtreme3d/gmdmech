@@ -82,8 +82,8 @@ class RigidBody: Freeable
 
     bool dynamic;
 
-    float damping = 0.5f;
-    float stopThreshold = 0.15f; //0.15f
+    float damping = 0.8f; // 0.5f
+    float stopThreshold = 0.18f; //0.15f
     float stopThresholdPV = 0.0f; //0.01f
 
     bool useOwnGravity = false;

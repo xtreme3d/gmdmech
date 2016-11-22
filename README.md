@@ -6,7 +6,8 @@ Currently gmdmech provides the following functionality:
 * Creation of physics worlds
 * Static and dynamic bodies
 * Geometric shapes for bodies: sphere, box, cylinder, cone, ellipsoid
+* Arbitrary static meshes
 * Built-in character controller that can move, jump and interact with other bodies - very useful for games
-* A number of helper functions for integration with Xtreme3D (syncing bodies with objects, etc).
+* A number of helper functions for integration with Xtreme3D (syncing bodies with objects, creating meshes from Freeforms, etc).
 
 There is a simple Xtreme3D-based example (dmech-demo.gmk) that demonstrates how to create bodies and a character that is controlled by the player.
