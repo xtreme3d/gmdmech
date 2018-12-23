@@ -11,3 +11,7 @@ Currently gmdmech provides the following functionality:
 * A number of helper functions for integration with Xtreme3D (syncing bodies with objects, creating meshes from Freeforms, etc).
 
 There is a simple Xtreme3D-based example (dmech-demo.gmk) that demonstrates how to create bodies and a character that is controlled by the player.
+
+Building a DLL:
+
+`dub build --arch=x86 --build=release-nobounds`

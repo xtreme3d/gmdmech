@@ -12,6 +12,7 @@
     ],
 
     "dependencies": {
+        "dlib": "0.15.0"
     },
 
     "buildRequirements":[
