@@ -1,0 +1,33 @@
+{
+    "name": "gmdmech",
+    "description": "dmech wrapper for Game Maker",
+    "homepage": "https://github.com/xtreme3d/gmdmech",
+    "license": "Boost",
+    "authors": [
+        "Timur Gafarov"
+    ],
+
+    "importPaths": [
+        "."
+    ],
+
+    "dependencies": {
+    },
+
+    "buildRequirements":[
+        "allowWarnings"
+    ],
+
+    "sourcePaths": ["."],
+    "mainSourceFile": "main.d",
+
+    "configurations": [
+        {
+            "name": "gmdmech",
+            "targetType": "dynamicLibrary",
+            "dflags-dmd": ["-shared"],
+            "sourceFiles-windows" : ["gmdmech.def"]
+        }
+    ]
+}
+
